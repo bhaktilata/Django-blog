@@ -1,0 +1,36 @@
+.col-md-8{
+float: left;
+margin-top: 10px;
+}
+.media-body h5{
+    font-size: 1.55rem;
+  }
+.col-md-8 .card{
+margin-right: 20px;
+}
+.col-md-4{
+float: left;
+}
+.d-flex h5{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #021a3e;
+}
+}
+.container .card-info{
+  padding: 2rem;
+
+}
+.card-media{
+  margin: 5px 20px;
+}
+.col-md-12 h2{
+  font-size: 3rem;
+}
+.clearfix:after {
+        visibility: hidden;
+        display: block;
+        content: "";
+        clear: both;
+        height: 0;
+}

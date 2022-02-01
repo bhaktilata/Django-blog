@@ -1,0 +1,82 @@
+<!doctype html>
+{% load static %}
+{% load cache %}
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Арийский путь{% endblock %}</title>
+    <meta name="title" content="Школа программирования">
+    <meta name="description" content="Школа восхождения представляет науку о трансцендентном – знание о постижении мира за пределы опыта,
+     а также духа и материи." />
+    <meta name="keywords" content="Школа восхождения " />
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" >
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/user.css' %}" rel="stylesheet">
+<style>
+.container{
+ width: 1050px;
+ margin:10px auto;
+ }
+ .selector-for-some-widget {
+  box-sizing: content-box;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+{% include 'particls/header.html' %}
+   <!--Messege Error or Success-->
+      {% if messages %}
+          {% for message in messages %}
+              {% if message.tags == 'error' %}
+                  <div class="alert alert-danger" role="alert">
+                      {{ message }}
+                  </div>
+              {% else %}
+                  <div class="alert alert-{{ message.tags }}" role="alert">
+                      {{ message }}
+                  </div>
+             {% endif %}
+          {% endfor %}
+      {% endif %}
+  <!--//Messege-->
+          {% block content %}CONTENT{% endblock %}
+         {% cache 6 sidebar %}
+        {% block sidebar %}{% endblock %}
+        {% endcache %}
+             {% if page_obj.has_other_pages %}
+            <nav aria-label="...">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Предыдущая</a>
+                        </li>
+                    {% endif %}
+                    {% for p in page_obj.paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="?page={{ p }}">{{ p }} <span class="sr-only"></span></a>
+                            </li>
+                        {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Последующая</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+{% include 'particls/footer.html' %}
+</div>
+</div>
+{% include 'particls/scripts.html' %}
+</body>
+</html>

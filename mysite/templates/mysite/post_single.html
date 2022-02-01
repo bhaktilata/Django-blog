@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ post.title }} :: {{ block.super }}
+{% endblock %}
+{% block content %}
+<!--Full Post-->
+   <div class="col-md-8">
+          <div class="card mb-3">
+             <div class="card-header">
+
+                 Категория:  <a href="{{ post.category.get_absolute_url }}" class="">{{ post.category.title }}</a> ({{ post.latest_news.count }})
+             </div>
+               <div class="card-body">
+                   <div class="media">
+                       {% if post.photo %}
+                          <img src="{{ post.photo.url }}" class="mr-3 img-fluid" alt="{{ post.title }}">
+                       {% else %}
+                           <img src="{% static 'images/c3.jpg' %}" alt="{{ post_item.title }}" class="img-fuild mr-3" style="width: 620px;">
+                       {% endif %}
+                          <div class="media-body">
+                             <h5 class="card-title mt-3">{{ post.title }}</h5>
+                              <p class="card-text">{{ post.full_text|safe|linebreaks }}</p>
+                            </div>
+                           <div class="card-footer text-muted">
+                               Создано: <i class="far fa-calendar-alt me-1"></i> {{ post_item.created_at|date:"j E Y" }} ::
+                               Автор: {{ post.author }} ::
+                               Хиты: {{ post.views }}
+                           </div>
+                   </div>
+                </div>
+<!--//Full Post-->
+<!--Comments-->
+      <!--List Comments-->
+                      <h3>{{ comments.count }} комментарий(я)</h3>
+       {% for comment in comments %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+               <strong>Комментарий: {{ forloop.counter }}</strong> :: <strong>Автор</strong>: {{ comment.name }} ::
+              <span class=" text-muted font-weight-normal">
+              <strong>Дата:</strong> {{ comment.created_at }}
+            </span>
+          </p>
+          {{ comment.body | linebreaks }}
+        </div>
+        {% empty %}
+             <p>Пока нет комментариев.</p>
+        {% endfor %}
+        <!--//List Comments-->
+        <div class="card-body">
+            {% if new_comment %}
+                <div class="alert alert-success" role="alert">Ваш комментарий ожидает модерации</div>
+            {% else %}
+            <!--Form Comment-->
+                <h3>Оставить комментарий</h3>
+                <form method="post" action="/post_comment/" style="margin-top: 0">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="btn btn-primary  btn-lg">Отправить</button>
+                </form>
+            <!--//Form Comment-->
+            {% endif %}
+<!--//Comments-->
+       </div>
+             </div>
+         </div>
+ {% endblock %}
+{% block sidebar %}
+{% include 'particls/sidebar.html' %}
+ {% endblock %}

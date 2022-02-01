@@ -1,0 +1,19 @@
+ <div class="col-md-4">
+       <div class="list-group">
+       <h3 class="mb-1">Список категорий</h3>
+        {% for item in categories %}
+       {% if item.visible %}
+           <a href="{{ item.get_absolute_url }}" class="list-group-item list-group-item-action" aria-current="true">
+                 <!--or {{ item.get_absolute_url }} # функция reverse (get_absolute) работает в пайтон файлах
+                                                    # тогда как функция url {% url 'category' item.slug %} в шаблонах-->
+           <div class="d-flex w-100 justify-content-between">
+               <h6 class="mb-1">{{ item.title }} <span class="badge bg-primary rounded-pill">{{ item.cnt }}</span></h6>
+               <small class="text-muted">{{ item.created_at|date:"j E Y" }}</small>
+           </div>
+                 <p class="mb-1">{{ item.description|truncatechars_html:100 }}</p>
+                 </a>
+
+            {% endif %}
+              {% endfor %}
+   </div>
+    </div>

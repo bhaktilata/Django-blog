@@ -1,0 +1,27 @@
+ <h3>{{ comments.count }} комментарий(я)</h3>
+       {% for comment in comments %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+               комментарий: {{ forloop.counter }} :: автор: {{ comment.name }} ::
+              <span class=" text-muted font-weight-normal">
+              дата: {{ comment.created_at }}
+            </span>
+          </p>
+          {{ comment.body | linebreaks }}
+        </div>
+        {% endfor %}
+
+       <div class="card-body">
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+          Ваш комментарий ожидает модерации
+        </div>
+        {% else %}
+        <h3>Оставить комментарий</h3>
+        <form method="post" style="margin-top: 1.3em;">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary  btn-lg">Отправить</button>
+        </form>
+        {% endif %}
+       </div>
