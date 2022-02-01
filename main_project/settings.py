@@ -139,7 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_HOST = 'smtp.beget.com'
 EMAIL_PORT = 465 # 2525
 EMAIL_HOST_USER = 'admin@inicons.ru' # email user
-EMAIL_HOST_PASSWORD = '7GVa*adzKs^3mk9' # email password
+EMAIL_HOST_PASSWORD = 'xxxxxxxxxxxx' # email password
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
